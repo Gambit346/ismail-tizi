@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Komik Test</title>
+  <title>Guinness Testi 🤪</title>
   <style>
     body {
       margin: 0;
@@ -25,28 +25,30 @@
       background: rgba(0, 0, 0, 0.6);
       padding: 30px;
       border-radius: 20px;
-      max-width: 600px;
+      max-width: 700px;
     }
 
     h1 {
-      font-size: 2em;
+      font-size: 1.6em;
       margin-bottom: 20px;
     }
 
-    .cevapBtn {
-      padding: 15px 30px;
-      font-size: 20px;
+    .secenekBtn {
+      padding: 12px 25px;
+      font-size: 18px;
       margin: 10px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      background: #ff3366;
+      background: #33c1ff;
       color: white;
       transition: 0.2s;
+      width: 80%;
+      max-width: 400px;
     }
 
-    .cevapBtn:hover {
-      background: #ff6699;
+    .secenekBtn:hover {
+      background: #66d4ff;
     }
 
     .sonuc {
@@ -64,94 +66,90 @@
 <body>
 
   <div id="soruKutu">
-    <h1 id="soruMetni">Hazırsan başlıyoruz 😏</h1>
-    <button id="evetBtn" class="cevapBtn">Evet 👍</button>
-    <button id="hayirBtn" class="cevapBtn">Hayır 👎</button>
+    <h1 id="soruMetni">Hazırsan başlıyoruz 🤓</h1>
+    <div id="secenekler"></div>
   </div>
 
   <div id="sonucKutu" style="display:none;">
-    <h1>🤣 Sonuçlar</h1>
+    <h1>📜 Sonuçlar</h1>
     <div id="sonuclar"></div>
   </div>
 
   <script>
     const sorular = [
-      "🧠 Dünya kaçıncı gezegen?",
-      "🥔 Patatesleri fırına mı atarsın yoksa direkt yersin mi?",
-      "🎁 Hiç sahte çekilişe kandın mı?",
-      "🪞 Kendini güzel buluyor musun?",
-      "🔘 Boş butona bastın mı?",
-      "📺 En son YouTube'da kaç saat geçirdin?",
-      "🚪 Kapıyı kilitlemeden çıktın mı hiç?",
-      "🐸 Kurbağaya dokunur musun?",
-      "🧃 Sütü önce koyar mısın yoksa kahveyi mi?",
-      "🎬 Titanic’in sonunu biliyor muydun?"
-    ];
-
-    const yorumlar = [
-      "Kanka Mars’ta doğmuş olabilirsin 😅",
-      "Patates ruhlu olduğun kesin 🍟",
-      "O iPhone gelmeyecek, kabullen 🤡",
-      "Ayna seninle kavga etmiş olabilir 🪞",
-      "Buton seni seviyor, ama boşsun 😌",
-      "YouTube seni işe almalı 📺",
-      "Kapı hâlâ açık bu arada 🚪",
-      "Kurbağa senden kaçtı 🐸",
-      "Süt-kahve sırası seni anlatıyor ☕",
-      "Sonu batıyor ama sen hâlâ izliyorsun 🚢"
+      {
+        soru: "🐓 Guinness'e göre bir tavuk bir günde en fazla kaç yumurta yumurtlamıştır?",
+        secenekler: ["A) 2", "B) 5", "C) 7"],
+        yorum: "Sen tavukla gurur duymalısın 🐔"
+      },
+      {
+        soru: "🌎 Dünyanın en büyük pizzası hangi ülkede yapılmıştır?",
+        secenekler: ["A) İtalya", "B) ABD", "C) Brezilya"],
+        yorum: "İtalya ağlıyor, çünkü pizzayı Amerika bastı 🍕"
+      },
+      {
+        soru: "🛌 En uzun uyuma rekoru kaç gündür sence?",
+        secenekler: ["A) 2 gün", "B) 11 gün", "C) 21 gün"],
+        yorum: "Sen zaten bunu her hafta yapıyorsun 😴"
+      },
+      {
+        soru: "🍔 Guinness'e göre en pahalı hamburger kaç dolardır?",
+        secenekler: ["A) 300$", "B) 777$", "C) 1000$"],
+        yorum: "O parayla 40 dürüm yerdin 🍔💸"
+      },
+      {
+        soru: "🐶 Dünyanın en yaşlı köpeği kaç yaşına kadar yaşamıştır?",
+        secenekler: ["A) 21", "B) 29", "C) 33"],
+        yorum: "Köpek bile senden daha sağlıklı 🐶"
+      },
+      {
+        soru: "🧦 1 dakikada kaç çorap giyme rekoru var?",
+        secenekler: ["A) 18", "B) 48", "C) 57"],
+        yorum: "Sen çorabı ters giyiyorsun zaten 🧦"
+      },
+      {
+        soru: "🍌 Ağzında aynı anda tutulan en fazla muz sayısı?",
+        secenekler: ["A) 4", "B) 6", "C) 8"],
+        yorum: "Muz ağzında değil, ruhunda 🤪"
+      },
+      {
+        soru: "🥶 Kutup ayıları neden görünmez olabilir termal kamerada?",
+        secenekler: ["A) Tüylerinden", "B) Kan sıcaklıkları", "C) Görünmezlik pelerini?!"],
+        yorum: "Senin de görünmez olduğunu düşünüyoruz 🥸"
+      },
+      {
+        soru: "🚽 Klozetle yapılan en uzun yolculuk kaç km?",
+        secenekler: ["A) 1", "B) 5", "C) 10"],
+        yorum: "Tuvaletle yolculuk... hayallerin ötesinde 🚽"
+      },
+      {
+        soru: "🎤 En hızlı rapçi dakikada kaç kelime söylüyor?",
+        secenekler: ["A) 280", "B) 600", "C) 723"],
+        yorum: "Sen WhatsApp ses kaydı bile yollayamıyorsun 🎙️"
+      }
     ];
 
     const cevaplar = [];
     let soruIndex = 0;
 
     const soruMetni = document.getElementById("soruMetni");
+    const seceneklerDiv = document.getElementById("secenekler");
     const soruKutu = document.getElementById("soruKutu");
     const sonucKutu = document.getElementById("sonucKutu");
     const sonuclarDiv = document.getElementById("sonuclar");
 
-    document.getElementById("evetBtn").addEventListener("click", () => cevapVer("Evet"));
-    document.getElementById("hayirBtn").addEventListener("click", () => cevapVer("Hayır"));
-
-    function cevapVer(cevap) {
-      cevaplar.push(cevap);
+    function sonrakiSoru(secim) {
+      cevaplar.push(secim);
       soruIndex++;
 
       if (soruIndex < sorular.length) {
-        soruMetni.innerText = sorular[soruIndex];
+        soruGoster();
       } else {
         sorulariBitir();
       }
     }
 
-    function sorulariBitir() {
-      soruKutu.style.display = "none";
-      sonucKutu.style.display = "block";
-
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i >= cevaplar.length) {
-          clearInterval(interval);
-          return;
-        }
-
-        const p = document.createElement("p");
-        p.className = "sonuc";
-        p.innerText = `Soru ${i + 1}: ${cevaplar[i]} → ${yorumlar[i]}`;
-        sonuclarDiv.appendChild(p);
-
-        setTimeout(() => {
-          p.classList.add("goster");
-        }, 100);
-
-        i++;
-      }, 1200);
-    }
-
-    // Sayfa yüklenince ilk soruyu göster
-    window.onload = () => {
-      soruMetni.innerText = sorular[0];
-    };
-  </script>
-
-</body>
-</html>
+    function soruGoster() {
+      const soruObj = sorular[soruIndex];
+      soruMetni.innerText = soruObj.soru;
+      seceneklerDiv.innerHTML =
