@@ -21,7 +21,7 @@
       backdrop-filter: blur(3px);
     }
 
-    #soruKutu, #sonucKutu {
+    #soruKutu, #sonucKutu, #quizKutu {
       background: rgba(0, 0, 0, 0.6);
       padding: 30px;
       border-radius: 20px;
@@ -33,7 +33,7 @@
       margin-bottom: 20px;
     }
 
-    .secenekBtn {
+    .secenekBtn, .baslaBtn {
       padding: 12px 25px;
       font-size: 18px;
       margin: 10px;
@@ -47,7 +47,7 @@
       max-width: 400px;
     }
 
-    .secenekBtn:hover {
+    .secenekBtn:hover, .baslaBtn:hover {
       background: #66d4ff;
     }
 
@@ -65,11 +65,19 @@
 </head>
 <body>
 
-  <div id="soruKutu">
-    <h1 id="soruMetni">Hazırsan başlıyoruz 🤓</h1>
+  <!-- Başlangıç kutusu -->
+  <div id="quizKutu">
+    <h1>Hazırsan başlıyoruz 🤓</h1>
+    <button class="baslaBtn" onclick="basla()">Başla 🚀</button>
+  </div>
+
+  <!-- Soru kutusu -->
+  <div id="soruKutu" style="display:none;">
+    <h1 id="soruMetni"></h1>
     <div id="secenekler"></div>
   </div>
 
+  <!-- Sonuç kutusu -->
   <div id="sonucKutu" style="display:none;">
     <h1>📜 Sonuçlar</h1>
     <div id="sonuclar"></div>
@@ -137,6 +145,13 @@
     const soruKutu = document.getElementById("soruKutu");
     const sonucKutu = document.getElementById("sonucKutu");
     const sonuclarDiv = document.getElementById("sonuclar");
+    const quizKutu = document.getElementById("quizKutu");
+
+    function basla() {
+      quizKutu.style.display = "none";
+      soruKutu.style.display = "block";
+      soruGoster();
+    }
 
     function sonrakiSoru(secim) {
       cevaplar.push(secim);
@@ -152,4 +167,41 @@
     function soruGoster() {
       const soruObj = sorular[soruIndex];
       soruMetni.innerText = soruObj.soru;
-      seceneklerDiv.innerHTML =
+      seceneklerDiv.innerHTML = "";
+
+      soruObj.secenekler.forEach(secenek => {
+        const btn = document.createElement("button");
+        btn.className = "secenekBtn";
+        btn.innerText = secenek;
+        btn.onclick = () => sonrakiSoru(secenek);
+        seceneklerDiv.appendChild(btn);
+      });
+    }
+
+    function sorulariBitir() {
+      soruKutu.style.display = "none";
+      sonucKutu.style.display = "block";
+
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i >= cevaplar.length) {
+          clearInterval(interval);
+          return;
+        }
+
+        const p = document.createElement("p");
+        p.className = "sonuc";
+        p.innerText = `Soru ${i + 1}: ${cevaplar[i]} → ${sorular[i].yorum}`;
+        sonuclarDiv.appendChild(p);
+
+        setTimeout(() => {
+          p.classList.add("goster");
+        }, 100);
+
+        i++;
+      }, 1200);
+    }
+  </script>
+
+</body>
+</html>
