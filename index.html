@@ -58,19 +58,40 @@
 <body>
 
   <h1>🤣 Komik Trol Testi</h1>
-
   <div id="output">Hazırsan başla bakalım 😏</div>
-
-  <button onclick="sonrakiSoru()" id="btn">Başla 🚀</button>
+  <button id="btn">Başla 🚀</button>
 
   <script>
-    const sorular = [
-      "🧠 Dünya kaçıncı gezegen? Zeka ölçüm... <b>Karpuzla yarışır.</b>",
-      "🥔 Patates testi: <b>Fırında çıtır patates!</b>",
-      "🔘 Bastın mı? <b>Yeminle çok boşsun 😂</b>",
-      "🎁 iPhone 17 kazandın! <b>Şaka tabi.</b>",
-      "🧌 İsmail testi: <b>%101 İsmail!</b>",
-      "🪞 Güzellik ölçülüyor... <b>💥 Ekran çatladı!</b>",
-      "⏳ Yükleniyor... %0.0000001 <b>Bekle biraz daha.</b>",
-      "🧠 IQ Ölçülüyor... <b>Spagetti kıvamı!</b>",
-      "🔮 2028’de dolma sararken dünyayı k
+    document.addEventListener('DOMContentLoaded', () => {
+      const sorular = [
+        "🧠 Dünya kaçıncı gezegen? Zeka ölçüm... <b>Karpuzla yarışır.</b>",
+        "🥔 Patates testi: <b>Fırında çıtır patates!</b>",
+        "🔘 Bastın mı? <b>Yeminle çok boşsun 😂</b>",
+        "🎁 iPhone 17 kazandın! <b>Şaka tabi.</b>",
+        "🧌 İsmail testi: <b>%101 İsmail!</b>",
+        "🪞 Güzellik ölçülüyor... <b>💥 Ekran çatladı!</b>",
+        "⏳ Yükleniyor... %0.0000001 <b>Bekle biraz daha.</b>",
+        "🧠 IQ Ölçülüyor... <b>Spagetti kıvamı!</b>",
+        "🔮 2028’de dolma sararken dünyayı kurtaracaksın!",
+        "🎬 Titanic önerisi. <b>Sonu: Batıyor, spoiler yok 🤫</b>"
+      ];
+
+      let soruIndex = 0;
+      const out = document.getElementById('output');
+      const btn = document.getElementById('btn');
+
+      btn.addEventListener('click', () => {
+        if (soruIndex >= sorular.length) {
+          out.innerHTML = "🎉 Test bitti! Ama sen hâlâ buradasın 🤣";
+          btn.style.display = 'none';
+        } else {
+          out.innerHTML = sorular[soruIndex];
+          soruIndex++;
+          btn.innerText = soruIndex < sorular.length ? "Sonraki 😂" : "Bitti 🎉";
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
