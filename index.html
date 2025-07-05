@@ -27,79 +27,52 @@
       border: none;
       border-radius: 8px;
     }
-    .yes { background-color: #4CAF50; color: white; }
-    .no { background-color: #f44336; color: white; }
-    #feedback { margin: 15px 0; font-size: 18px; font-weight: bold; }
-    #timer { color: red; font-size: 18px; margin-bottom: 10px; }
+    .option {
+      background-color: #2196F3;
+      color: white;
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+    }
+    #feedback {
+      margin: 15px 0;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    #timer {
+      color: red;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
   <div id="quiz-container">
     <h1>Gerçekçi IQ Testi</h1>
-    <button onclick="startQuiz()">🧠 Teste Başla</button>
+    <button id="startBtn">🧠 Teste Başla</button>
   </div>
 
   <script>
     const questions = [
       {
         question: "Bazı aylar 30, bazıları 31 çeker. Kaç ay 28 çeker?",
+        options: ["1", "2", "Hepsi", "Şubat"],
         answer: "Hepsi"
       },
       {
-        question: "Bir odada 3 ampul ve dışarıda 3 anahtar var. Sadece bir kez odaya girebilirsin. Hangi anahtar hangi ampule ait, nasıl anlarsın?",
-        answer: "Biri açık bırakılır, biri açılıp kapatılır, biri hiç dokunulmaz"
+        question: "Bir odada 3 ampul ve dışarıda 3 anahtar var. Sadece bir kez odaya girebilirsin. Nasıl anlarsın?",
+        options: [
+          "Rastgele denersin",
+          "Ampuller farklı renklerde",
+          "Biri açık, biri kapalı, biri ısıtılmış bırakılır",
+          "Hiçbirini anlayamazsın"
+        ],
+        answer: "Biri açık, biri kapalı, biri ısıtılmış bırakılır"
       },
       {
-        question: "Bir çiftlikte 5 köpek, her biri 4 ayaklı. Kaç ayak vardır?",
+        question: "Bir çiftlikte 5 köpek var, her biri 4 ayaklı. Kaç ayak eder?",
+        options: ["20", "10", "5", "25"],
         answer: "20"
-      },
-      {
-        question: "Bir tren saatte 60 km hızla giderken 1 saatte kaç km yol alır?",
-        answer: "60"
-      },
-      {
-        question: "Saat 3:15'te akrep ile yelkovan arasındaki açı kaçtır?",
-        answer: "7.5"
-      },
-      {
-        question: "Bir adam pazartesi işe başlar ve sadece pazartesi, çarşamba, cuma çalışır. 10 gün sonra hangi gündeyiz?",
-        answer: "Perşembe"
-      },
-      {
-        question: "Bir odada 10 kişi var, hepsi birbirinin elini bir kez sıktı. Kaç tokalaşma olur?",
-        answer: "45"
-      },
-      {
-        question: "Bazı ayakkabılar 60 TL. 2 çifti kaç TL eder?",
-        answer: "120"
-      },
-      {
-        question: "Bir ördek 2 ayağıyla 2 dakikada 2 metre yürürse, 4 ördek 2 dakikada kaç metre yürür?",
-        answer: "2"
-      },
-      {
-        question: "Bir çocuğun yarısı kadar yaşındayım. O 10 yaşındaysa ben kaç yaşındayım?",
-        answer: "15"
-      },
-      {
-        question: "Bir araba A noktasından B noktasına 60 km hızla, geri 40 km hızla gidiyor. Ortalama hızı nedir?",
-        answer: "48"
-      },
-      {
-        question: "Saat 6:00'da saatlerin arasındaki açı nedir?",
-        answer: "180"
-      },
-      {
-        question: "Bir kitap 100 sayfa. Her sayfanın 2 yüzü varsa toplam kaç yüz vardır?",
-        answer: "200"
-      },
-      {
-        question: "10 kişi sırayla 2 dakika konuşursa toplam süre kaç dakikadır?",
-        answer: "20"
-      },
-      {
-        question: "3 erkek 3 saatte bir duvarı boyarsa, 6 erkek aynı duvarı kaç saatte boyar?",
-        answer: "1.5"
       }
     ];
 
@@ -108,9 +81,13 @@
     let timer;
     let timeLeft = 30;
 
+    const quizContainer = document.getElementById("quiz-container");
+
+    document.getElementById("startBtn").onclick = startQuiz;
+
     function startQuiz() {
-      score = 0;
       currentQuestion = 0;
+      score = 0;
       showQuestion();
     }
 
@@ -118,37 +95,32 @@
       clearInterval(timer);
       timeLeft = 30;
       const q = questions[currentQuestion];
-      document.getElementById("quiz-container").innerHTML = `
+      quizContainer.innerHTML = `
         <h2>Soru ${currentQuestion + 1} / ${questions.length}</h2>
-        <div id="timer">⏳ Kalan Süre: 30 saniye</div>
+        <div id="timer">⏳ Kalan Süre: ${timeLeft} saniye</div>
         <p>${q.question}</p>
-        <button class="yes" onclick="submitAnswer('evet')">Evet</button>
-        <button class="no" onclick="submitAnswer('hayir')">Hayır</button>
+        ${q.options.map(opt => `<button class="option" onclick="submitAnswer('${opt}')">${opt}</button>`).join('')}
         <div id="feedback"></div>
-        <button id="nextBtn" style="display:none" onclick="nextQuestion()">Sonraki ➡️</button>
+        <button id="nextBtn" style="display:none;">➡️ Sonraki</button>
       `;
+      document.getElementById("nextBtn").onclick = nextQuestion;
       startTimer();
     }
 
-    function submitAnswer(userAnswer) {
+    function submitAnswer(selected) {
       clearInterval(timer);
-      const correct = questions[currentQuestion].answer.toLowerCase();
+      const correct = questions[currentQuestion].answer;
       const feedback = document.getElementById("feedback");
-
-      if (userAnswer.toLowerCase() === "evet" && (correct === "evet" || correct === "e")) {
+      if (selected === correct) {
         score++;
-        feedback.textContent = "✅ Doğru cevap!";
-        feedback.style.color = "green";
-      } else if (userAnswer.toLowerCase() === "hayir" && (correct === "hayir" || correct === "h")) {
-        score++;
-        feedback.textContent = "✅ Doğru cevap!";
+        feedback.textContent = "✅ Doğru!";
         feedback.style.color = "green";
       } else {
-        feedback.textContent = `❌ Yanlış. Doğru cevap: ${questions[currentQuestion].answer}`;
+        feedback.textContent = `❌ Yanlış! Doğru cevap: ${correct}`;
         feedback.style.color = "red";
       }
 
-      document.querySelectorAll("button").forEach(btn => btn.disabled = true);
+      document.querySelectorAll(".option").forEach(btn => btn.disabled = true);
       document.getElementById("nextBtn").style.display = "inline-block";
     }
 
@@ -164,40 +136,23 @@
     function startTimer() {
       timer = setInterval(() => {
         timeLeft--;
-        document.getElementById("timer").textContent = `⏳ Kalan Süre: ${timeLeft} saniye`;
+        const timerEl = document.getElementById("timer");
+        if (timerEl) timerEl.textContent = `⏳ Kalan Süre: ${timeLeft} saniye`;
         if (timeLeft <= 0) {
           clearInterval(timer);
-          document.getElementById("feedback").textContent = `⏰ Zaman doldu! Doğru cevap: ${questions[currentQuestion].answer}`;
-          document.querySelectorAll("button").forEach(btn => btn.disabled = true);
-          document.getElementById("nextBtn").style.display = "inline-block";
+          submitAnswer(""); // zaman aşımı = yanlış
         }
       }, 1000);
     }
 
     function showResult() {
-      let iq;
-      if (score <= 3) iq = 80;
-      else if (score <= 6) iq = 95;
-      else if (score <= 9) iq = 105;
-      else if (score <= 12) iq = 115;
-      else if (score === 13) iq = 125;
-      else if (score === 14) iq = 130;
-      else iq = 135;
-
-      document.getElementById("quiz-container").innerHTML = `
-        <h2>Test Tamamlandı!</h2>
+      let iq = 80 + score * 10;
+      quizContainer.innerHTML = `
+        <h2>Test Bitti ✅</h2>
         <p>Doğru Sayısı: ${score} / ${questions.length}</p>
-        <p><strong>🔢 Tahmini IQ: ${iq}</strong></p>
-        <p>${getIQComment(iq)}</p>
+        <p><strong>Tahmini IQ: ${iq}</strong></p>
+        <button onclick="startQuiz()">🔁 Tekrar Dene</button>
       `;
-    }
-
-    function getIQComment(iq) {
-      if (iq <= 85) return "Zorlansan da denedin, bu bile önemli!";
-      if (iq <= 100) return "Ortalama seviyeye yakınsın, biraz gelişimle çok ilerlersin!";
-      if (iq <= 115) return "Zeki ve dikkatli biri olduğun belli!";
-      if (iq <= 130) return "Mantığın güçlü, problem çözmede başarılısın!";
-      return "Harikasın! Mensa seviyesindesin 🎓";
     }
   </script>
 </body>
