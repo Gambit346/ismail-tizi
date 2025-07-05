@@ -21,7 +21,7 @@
       backdrop-filter: blur(3px);
     }
 
-    #soruKutu, #sonucKutu, #quizKutu {
+    #quizKutu, #soruKutu {
       background: rgba(0, 0, 0, 0.6);
       padding: 30px;
       border-radius: 20px;
@@ -51,36 +51,31 @@
       background: #66d4ff;
     }
 
-    .sonuc {
-      font-size: 1.2em;
-      margin: 10px 0;
+    #yorum {
+      font-size: 1.1em;
+      margin-top: 20px;
       opacity: 0;
-      transition: opacity 0.5s ease-in;
+      transition: opacity 0.5s ease-in-out;
     }
 
-    .sonuc.goster {
+    #yorum.goster {
       opacity: 1;
     }
   </style>
 </head>
 <body>
 
-  <!-- Başlangıç kutusu -->
+  <!-- Başlangıç -->
   <div id="quizKutu">
     <h1>Hazırsan başlıyoruz 🤓</h1>
     <button class="baslaBtn" onclick="basla()">Başla 🚀</button>
   </div>
 
-  <!-- Soru kutusu -->
+  <!-- Sorular -->
   <div id="soruKutu" style="display:none;">
     <h1 id="soruMetni"></h1>
     <div id="secenekler"></div>
-  </div>
-
-  <!-- Sonuç kutusu -->
-  <div id="sonucKutu" style="display:none;">
-    <h1>📜 Sonuçlar</h1>
-    <div id="sonuclar"></div>
+    <div id="yorum"></div>
   </div>
 
   <script>
@@ -109,43 +104,15 @@
         soru: "🐶 Dünyanın en yaşlı köpeği kaç yaşına kadar yaşamıştır?",
         secenekler: ["A) 21", "B) 29", "C) 33"],
         yorum: "Köpek bile senden daha sağlıklı 🐶"
-      },
-      {
-        soru: "🧦 1 dakikada kaç çorap giyme rekoru var?",
-        secenekler: ["A) 18", "B) 48", "C) 57"],
-        yorum: "Sen çorabı ters giyiyorsun zaten 🧦"
-      },
-      {
-        soru: "🍌 Ağzında aynı anda tutulan en fazla muz sayısı?",
-        secenekler: ["A) 4", "B) 6", "C) 8"],
-        yorum: "Muz ağzında değil, ruhunda 🤪"
-      },
-      {
-        soru: "🥶 Kutup ayıları neden görünmez olabilir termal kamerada?",
-        secenekler: ["A) Tüylerinden", "B) Kan sıcaklıkları", "C) Görünmezlik pelerini?!"],
-        yorum: "Senin de görünmez olduğunu düşünüyoruz 🥸"
-      },
-      {
-        soru: "🚽 Klozetle yapılan en uzun yolculuk kaç km?",
-        secenekler: ["A) 1", "B) 5", "C) 10"],
-        yorum: "Tuvaletle yolculuk... hayallerin ötesinde 🚽"
-      },
-      {
-        soru: "🎤 En hızlı rapçi dakikada kaç kelime söylüyor?",
-        secenekler: ["A) 280", "B) 600", "C) 723"],
-        yorum: "Sen WhatsApp ses kaydı bile yollayamıyorsun 🎙️"
       }
     ];
 
-    const cevaplar = [];
     let soruIndex = 0;
-
     const soruMetni = document.getElementById("soruMetni");
     const seceneklerDiv = document.getElementById("secenekler");
-    const soruKutu = document.getElementById("soruKutu");
-    const sonucKutu = document.getElementById("sonucKutu");
-    const sonuclarDiv = document.getElementById("sonuclar");
     const quizKutu = document.getElementById("quizKutu");
+    const soruKutu = document.getElementById("soruKutu");
+    const yorumDiv = document.getElementById("yorum");
 
     function basla() {
       quizKutu.style.display = "none";
@@ -153,53 +120,39 @@
       soruGoster();
     }
 
-    function sonrakiSoru(secim) {
-      cevaplar.push(secim);
-      soruIndex++;
-
-      if (soruIndex < sorular.length) {
-        soruGoster();
-      } else {
-        sorulariBitir();
-      }
-    }
-
     function soruGoster() {
       const soruObj = sorular[soruIndex];
       soruMetni.innerText = soruObj.soru;
-      seceneklerDiv.innerHTML = "";
+      yorumDiv.classList.remove("goster");
+      yorumDiv.innerText = "";
 
+      seceneklerDiv.innerHTML = "";
       soruObj.secenekler.forEach(secenek => {
         const btn = document.createElement("button");
         btn.className = "secenekBtn";
         btn.innerText = secenek;
-        btn.onclick = () => sonrakiSoru(secenek);
+        btn.onclick = () => secimiYap(secenek);
         seceneklerDiv.appendChild(btn);
       });
     }
 
-    function sorulariBitir() {
-      soruKutu.style.display = "none";
-      sonucKutu.style.display = "block";
+    function secimiYap(secenek) {
+      const yorum = sorular[soruIndex].yorum;
+      seceneklerDiv.innerHTML = ""; // butonları sil
+      yorumDiv.innerText = yorum;
+      yorumDiv.classList.add("goster");
 
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i >= cevaplar.length) {
-          clearInterval(interval);
-          return;
+      // 2 saniye sonra diğer soruya geç
+      setTimeout(() => {
+        soruIndex++;
+        if (soruIndex < sorular.length) {
+          soruGoster();
+        } else {
+          soruMetni.innerText = "Test bitti! 🎉";
+          yorumDiv.innerText = "😂 Yorumlar yeterli, şimdi paylaş bakalım!";
+          seceneklerDiv.innerHTML = "";
         }
-
-        const p = document.createElement("p");
-        p.className = "sonuc";
-        p.innerText = `Soru ${i + 1}: ${cevaplar[i]} → ${sorular[i].yorum}`;
-        sonuclarDiv.appendChild(p);
-
-        setTimeout(() => {
-          p.classList.add("goster");
-        }, 100);
-
-        i++;
-      }, 1200);
+      }, 2000);
     }
   </script>
 
