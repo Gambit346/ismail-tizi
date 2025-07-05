@@ -2,80 +2,113 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Jumpscare</title>
+  <title>Komik Trol Sitesi</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      height: 100vh;
+      background: #111;
+      color: #fff;
+      font-family: 'Comic Sans MS', sans-serif;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: start;
+      min-height: 100vh;
+      padding: 40px 20px;
       background-image: url('kota.png');
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
     }
-
-    #jumpscare {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: black;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 10px black;
     }
-
-    #jumpscare video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
     button {
-      padding: 20px 40px;
-      font-size: 24px;
-      cursor: pointer;
-      background: red;
-      color: white;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
       border: none;
-      border-radius: 12px;
-      box-shadow: 0 0 20px red;
+      border-radius: 10px;
+      background: #ff3366;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff3366;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #ff6699;
+      box-shadow: 0 0 15px #ff6699;
+    }
+    #output {
+      margin-top: 30px;
+      font-size: 22px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 600px;
+      text-align: center;
+      line-height: 1.5em;
     }
   </style>
 </head>
 <body>
-  <button onclick="showJumpscare()">İsmail buraya bas</button>
 
-  <div id="jumpscare">
-    <video src="opa.mp4" autoplay></video>
-  </div>
+  <h1>🤣 Komik Trol Sitesi</h1>
+
+  <button onclick="goster('1')">🧠 Zeka Testi</button>
+  <button onclick="goster('2')">🥔 Patates Testi</button>
+  <button onclick="goster('3')">🔘 Bitmeyen Buton</button>
+  <button onclick="goster('4')">🎁 Ödül Kazandın</button>
+  <button onclick="goster('5')">🧌 İsmail Testi</button>
+  <button onclick="goster('6')">🪞 Güzellik Ölçer</button>
+  <button onclick="goster('7')">⏳ Yükleniyor...</button>
+  <button onclick="goster('8')">🧠 IQ Ölçer</button>
+  <button onclick="goster('9')">🔮 Geleceğini Söyleyeyim</button>
+  <button onclick="goster('10')">🎬 Film Önerisi</button>
+
+  <div id="output">👇 Bir butona bas ve trolle 😄</div>
 
   <script>
-    function showJumpscare() {
-      const scare = document.getElementById('jumpscare');
-      scare.style.display = 'flex';
-
-      const video = scare.querySelector('video');
-      video.muted = false;
-      video.play();
-
-      if (video.requestFullscreen) {
-        video.requestFullscreen().catch(() => {});
-      } else if (video.webkitRequestFullscreen) {
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
+    function goster(id) {
+      const output = document.getElementById("output");
+      switch (id) {
+        case '1':
+          output.innerHTML = "1️⃣ Soru: Dünya kaçıncı gezegen? <br> 🧠 Cevap: IQ ölçüm tamamlandı... Sonuç: <b>Çok zeki gibi ama emin değiliz.</b>";
+          break;
+        case '2':
+          output.innerHTML = "🥔 Sen kesin patatesin.<br>Hatta fırında çıtır çıtır bir tanesin!";
+          break;
+        case '3':
+          output.innerHTML = "🔘 Bastın mı? <br>Hâlâ mı basıyorsun? <br>Gerçekten çok boşsun 😂";
+          break;
+        case '4':
+          output.innerHTML = "🎉 Tebrikler! iPhone 16 kazandınız!<br>🧢 Şaka şaka. Bizde bütçe mi var?";
+          break;
+        case '5':
+          output.innerHTML = "🧌 Bu testi geçemiyorsan İsmail değilsin.<br>✅ İsmail Tespit: %101";
+          break;
+        case '6':
+          output.innerHTML = "📷 Güzellik ölçümü yapılıyor...<br>💥 Kamera patladı! Çok güzelsin 😎";
+          break;
+        case '7':
+          output.innerHTML = "⏳ Yükleniyor... %0.0000000000001<br>Lütfen 80 yıl bekleyin.";
+          break;
+        case '8':
+          output.innerHTML = "🧠 IQ ölçülüyor...<br>Sonuç: <b>Makarnadan biraz hallice</b> 😁";
+          break;
+        case '9':
+          output.innerHTML = "🔮 Gelecekte dolma sararken dünyayı kurtaracaksın.<br>Hazır ol!";
+          break;
+        case '10':
+          output.innerHTML = "🎬 Bugünün film önerisi: Titanic<br>(Sonu: Batıyor ama spoiler verme 🤫)";
+          break;
+        default:
+          output.innerHTML = "Hata oluştu 😅";
       }
     }
   </script>
+
 </body>
 </html>
