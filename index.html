@@ -2,96 +2,78 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Komik Trol Testi</title>
+  <title>Komik Test</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: #111;
-      color: #fff;
       font-family: 'Comic Sans MS', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
       background-image: url('kota.png');
       background-size: cover;
       background-position: center;
+      color: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      backdrop-filter: blur(3px);
+    }
+
+    #soruKutu, #sonucKutu {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 600px;
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 2em;
       margin-bottom: 20px;
-      text-shadow: 2px 2px 8px black;
     }
 
-    #output {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 20px;
-      border-radius: 15px;
-      max-width: 600px;
-      line-height: 1.5em;
-      margin-bottom: 20px;
-      font-size: 22px;
-    }
-
-    button {
+    .cevapBtn {
       padding: 15px 30px;
-      font-size: 18px;
+      font-size: 20px;
+      margin: 10px;
       border: none;
       border-radius: 10px;
+      cursor: pointer;
       background: #ff3366;
       color: white;
-      cursor: pointer;
-      box-shadow: 0 0 10px #ff3366;
       transition: 0.2s;
     }
 
-    button:hover {
+    .cevapBtn:hover {
       background: #ff6699;
-      box-shadow: 0 0 15px #ff6699;
+    }
+
+    .sonuc {
+      font-size: 1.2em;
+      margin: 10px 0;
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+    }
+
+    .sonuc.goster {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
 
-  <h1>🤣 Komik Trol Testi</h1>
-  <div id="output">Hazırsan başla bakalım 😏</div>
-  <button id="btn">Başla 🚀</button>
+  <div id="soruKutu">
+    <h1 id="soruMetni">Hazırsan başlıyoruz 😏</h1>
+    <button class="cevapBtn" onclick="cevapVer('Evet')">Evet 👍</button>
+    <button class="cevapBtn" onclick="cevapVer('Hayır')">Hayır 👎</button>
+  </div>
+
+  <div id="sonucKutu" style="display:none;">
+    <h1>🤣 Sonuçlar</h1>
+    <div id="sonuclar"></div>
+  </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const sorular = [
-        "🧠 Dünya kaçıncı gezegen? Zeka ölçüm... <b>Karpuzla yarışır.</b>",
-        "🥔 Patates testi: <b>Fırında çıtır patates!</b>",
-        "🔘 Bastın mı? <b>Yeminle çok boşsun 😂</b>",
-        "🎁 iPhone 17 kazandın! <b>Şaka tabi.</b>",
-        "🧌 İsmail testi: <b>%101 İsmail!</b>",
-        "🪞 Güzellik ölçülüyor... <b>💥 Ekran çatladı!</b>",
-        "⏳ Yükleniyor... %0.0000001 <b>Bekle biraz daha.</b>",
-        "🧠 IQ Ölçülüyor... <b>Spagetti kıvamı!</b>",
-        "🔮 2028’de dolma sararken dünyayı kurtaracaksın!",
-        "🎬 Titanic önerisi. <b>Sonu: Batıyor, spoiler yok 🤫</b>"
-      ];
-
-      let soruIndex = 0;
-      const out = document.getElementById('output');
-      const btn = document.getElementById('btn');
-
-      btn.addEventListener('click', () => {
-        if (soruIndex >= sorular.length) {
-          out.innerHTML = "🎉 Test bitti! Ama sen hâlâ buradasın 🤣";
-          btn.style.display = 'none';
-        } else {
-          out.innerHTML = sorular[soruIndex];
-          soruIndex++;
-          btn.innerText = soruIndex < sorular.length ? "Sonraki 😂" : "Bitti 🎉";
-        }
-      });
-    });
-  </script>
-
-</body>
-</html>
+    const sorular = [
+      "🧠 Dünya kaç
