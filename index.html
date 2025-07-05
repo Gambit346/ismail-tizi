@@ -2,159 +2,216 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Guinness Testi 🤪</title>
+  <title>Gerçekçi IQ Testi</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Comic Sans MS', sans-serif;
-      background-image: url('kota.png');
-      background-size: cover;
-      background-position: center;
-      color: white;
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      backdrop-filter: blur(3px);
+      padding: 50px;
     }
-
-    #quizKutu, #soruKutu {
-      background: rgba(0, 0, 0, 0.6);
+    #quiz-container {
+      background: white;
       padding: 30px;
-      border-radius: 20px;
-      max-width: 700px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-
-    h1 {
-      font-size: 1.6em;
+    .question {
+      font-size: 24px;
       margin-bottom: 20px;
     }
-
-    .secenekBtn, .baslaBtn {
-      padding: 12px 25px;
+    .options button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
       font-size: 18px;
-      margin: 10px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      background: #33c1ff;
+      background-color: #007BFF;
       color: white;
-      transition: 0.2s;
-      width: 80%;
-      max-width: 400px;
+      transition: background 0.3s;
     }
-
-    .secenekBtn:hover, .baslaBtn:hover {
-      background: #66d4ff;
+    .options button:hover {
+      background-color: #0056b3;
     }
-
-    #yorum {
-      font-size: 1.1em;
-      margin-top: 20px;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
+    #feedback {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
     }
-
-    #yorum.goster {
-      opacity: 1;
+    #nextBtn {
+      margin-top: 25px;
+      padding: 12px 25px;
+      font-size: 18px;
+      background: green;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <!-- Başlangıç -->
-  <div id="quizKutu">
-    <h1>Hazırsan başlıyoruz 🤓</h1>
-    <button class="baslaBtn" onclick="basla()">Başla 🚀</button>
-  </div>
+<div id="quiz-container">
+  <div id="question-number"></div>
+  <div class="question" id="question-text"></div>
+  <div class="options" id="options"></div>
+  <div id="feedback"></div>
+  <button id="nextBtn" style="display:none;" onclick="nextQuestion()">Sonraki Soru</button>
+</div>
 
-  <!-- Sorular -->
-  <div id="soruKutu" style="display:none;">
-    <h1 id="soruMetni"></h1>
-    <div id="secenekler"></div>
-    <div id="yorum"></div>
-  </div>
+<script>
+  const questions = [
+    {
+      question: "Hangi sayı diğerlerinden farklıdır?",
+      options: ["2", "3", "5", "9", "7"],
+      answer: "9"
+    },
+    {
+      question: "Bir tren 5 günde 120 km/gün gidiyor. Toplam kaç km?",
+      options: ["500", "600", "700", "550"],
+      answer: "600"
+    },
+    {
+      question: "Bir saat önce, 3 saat sonra saat 10 olacaktı. Şimdi saat kaç?",
+      options: ["5", "6", "7", "4"],
+      answer: "7"
+    },
+    {
+      question: "3 inek, günde 2 litre süt. 2 günde toplam ne kadar?",
+      options: ["6", "10", "12", "18"],
+      answer: "18"
+    },
+    {
+      question: "Seri: 2, 4, 8, 16, ?",
+      options: ["18", "24", "32", "30"],
+      answer: "32"
+    },
+    {
+      question: "Seri: 1, 3, 6, 10, ?",
+      options: ["13", "14", "15", "16"],
+      answer: "15"
+    },
+    {
+      question: "144 sayısının karekökü?",
+      options: ["11", "12", "13", "14"],
+      answer: "12"
+    },
+    {
+      question: "Seri: 81, 27, 9, 3, ?",
+      options: ["1", "2", "0", "0.5"],
+      answer: "1"
+    },
+    {
+      question: "(5 × 4) + (3 × 2) = ?",
+      options: ["26", "24", "20", "22"],
+      answer: "26"
+    },
+    {
+      question: "Karenin çevresi 20 cm. Bir kenarı kaç cm?",
+      options: ["4", "5", "6", "10"],
+      answer: "5"
+    },
+    {
+      question: "Kalem → Yazı, Fırça → ?",
+      options: ["Kağıt", "Silgi", "Boya", "Çizgi"],
+      answer: "Boya"
+    },
+    {
+      question: "Göz → Görmek, Kulak → ?",
+      options: ["Tat", "Duyma", "Koku", "Ses"],
+      answer: "Duyma"
+    },
+    {
+      question: "Gece → Ay, Gündüz → ?",
+      options: ["Lamba", "Işık", "Güneş", "Sabah"],
+      answer: "Güneş"
+    },
+    {
+      question: "Bir küpün en fazla kaç yüzü aynı anda görünür?",
+      options: ["1", "2", "3", "4"],
+      answer: "3"
+    },
+    {
+      question: "Aynada 'IQ' nasıl görünür?",
+      options: ["IQ", "QI", "ИQ", "IԚ"],
+      answer: "QI"
+    }
+  ];
 
-  <script>
-    const sorular = [
-      {
-        soru: "🐓 Guinness'e göre bir tavuk bir günde en fazla kaç yumurta yumurtlamıştır?",
-        secenekler: ["A) 2", "B) 5", "C) 7"],
-        yorum: "Sen tavukla gurur duymalısın 🐔"
-      },
-      {
-        soru: "🌎 Dünyanın en büyük pizzası hangi ülkede yapılmıştır?",
-        secenekler: ["A) İtalya", "B) ABD", "C) Brezilya"],
-        yorum: "İtalya ağlıyor, çünkü pizzayı Amerika bastı 🍕"
-      },
-      {
-        soru: "🛌 En uzun uyuma rekoru kaç gündür sence?",
-        secenekler: ["A) 2 gün", "B) 11 gün", "C) 21 gün"],
-        yorum: "Sen zaten bunu her hafta yapıyorsun 😴"
-      },
-      {
-        soru: "🍔 Guinness'e göre en pahalı hamburger kaç dolardır?",
-        secenekler: ["A) 300$", "B) 777$", "C) 1000$"],
-        yorum: "O parayla 40 dürüm yerdin 🍔💸"
-      },
-      {
-        soru: "🐶 Dünyanın en yaşlı köpeği kaç yaşına kadar yaşamıştır?",
-        secenekler: ["A) 21", "B) 29", "C) 33"],
-        yorum: "Köpek bile senden daha sağlıklı 🐶"
-      }
-    ];
+  let currentQuestion = 0;
+  let score = 0;
 
-    let soruIndex = 0;
-    const soruMetni = document.getElementById("soruMetni");
-    const seceneklerDiv = document.getElementById("secenekler");
-    const quizKutu = document.getElementById("quizKutu");
-    const soruKutu = document.getElementById("soruKutu");
-    const yorumDiv = document.getElementById("yorum");
+  function loadQuestion() {
+    const q = questions[currentQuestion];
+    document.getElementById("question-number").textContent = `Soru ${currentQuestion + 1} / ${questions.length}`;
+    document.getElementById("question-text").textContent = q.question;
+    document.getElementById("options").innerHTML = "";
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("nextBtn").style.display = "none";
 
-    function basla() {
-      quizKutu.style.display = "none";
-      soruKutu.style.display = "block";
-      soruGoster();
+    q.options.forEach(option => {
+      const btn = document.createElement("button");
+      btn.textContent = option;
+      btn.onclick = () => checkAnswer(option);
+      document.getElementById("options").appendChild(btn);
+    });
+  }
+
+  function checkAnswer(selected) {
+    const correct = questions[currentQuestion].answer;
+    const feedback = document.getElementById("feedback");
+
+    if (selected === correct) {
+      feedback.textContent = "✅ Doğru!";
+      feedback.style.color = "green";
+      score++;
+    } else {
+      feedback.textContent = `❌ Yanlış! Doğru cevap: ${correct}`;
+      feedback.style.color = "red";
     }
 
-    function soruGoster() {
-      const soruObj = sorular[soruIndex];
-      soruMetni.innerText = soruObj.soru;
-      yorumDiv.classList.remove("goster");
-      yorumDiv.innerText = "";
+    Array.from(document.querySelectorAll("#options button")).forEach(btn => {
+      btn.disabled = true;
+    });
 
-      seceneklerDiv.innerHTML = "";
-      soruObj.secenekler.forEach(secenek => {
-        const btn = document.createElement("button");
-        btn.className = "secenekBtn";
-        btn.innerText = secenek;
-        btn.onclick = () => secimiYap(secenek);
-        seceneklerDiv.appendChild(btn);
-      });
+    document.getElementById("nextBtn").style.display = "inline-block";
+  }
+
+  function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      showResult();
     }
+  }
 
-    function secimiYap(secenek) {
-      const yorum = sorular[soruIndex].yorum;
-      seceneklerDiv.innerHTML = ""; // butonları sil
-      yorumDiv.innerText = yorum;
-      yorumDiv.classList.add("goster");
+  function showResult() {
+    let iq = 80 + score * 4;
+    let comment = "";
 
-      // 2 saniye sonra diğer soruya geç
-      setTimeout(() => {
-        soruIndex++;
-        if (soruIndex < sorular.length) {
-          soruGoster();
-        } else {
-          soruMetni.innerText = "Test bitti! 🎉";
-          yorumDiv.innerText = "😂 Yorumlar yeterli, şimdi paylaş bakalım!";
-          seceneklerDiv.innerHTML = "";
-        }
-      }, 2000);
-    }
-  </script>
+    if (score <= 4) comment = "Zeka gelişimi başlangıç seviyesinde.";
+    else if (score <= 7) comment = "Ortalama zeka seviyesi.";
+    else if (score <= 10) comment = "İyi düzeyde mantıksal zeka.";
+    else if (score <= 13) comment = "Üst düzey analitik düşünme!";
+    else comment = "Dahi seviyesine çok yakınsın! 👏";
+
+    document.getElementById("quiz-container").innerHTML = `
+      <h2>Test Tamamlandı!</h2>
+      <p>Doğru Sayısı: ${score} / ${questions.length}</p>
+      <p><strong>Tahmini IQ: ${iq}</strong></p>
+      <p>${comment}</p>
+    `;
+  }
+
+  // Başlat
+  loadQuestion();
+</script>
 
 </body>
 </html>
