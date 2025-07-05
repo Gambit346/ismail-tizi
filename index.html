@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Gerçekçi IQ Testi</title>
+  <title>IQ Testi</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,7 +12,7 @@
       padding: 20px;
     }
     #quiz-container {
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
       background: white;
       padding: 30px;
@@ -55,24 +55,89 @@
   <script>
     const questions = [
       {
-        question: "Bazı aylar 30, bazıları 31 çeker. Kaç ay 28 çeker?",
-        options: ["1", "2", "Hepsi", "Şubat"],
-        answer: "Hepsi"
+        question: "1. Hangi sayı bu dizide eksik? 2, 4, 8, 16, ?, 64",
+        options: ["20", "24", "32", "48"],
+        answer: "32"
       },
       {
-        question: "Bir odada 3 ampul ve dışarıda 3 anahtar var. Sadece bir kez odaya girebilirsin. Nasıl anlarsın?",
+        question: "2. Eğer bazı kitaplar dergidir ve tüm dergiler renkliyse, aşağıdakilerden hangisi kesinlikle doğrudur?",
         options: [
-          "Rastgele denersin",
-          "Ampuller farklı renklerde",
-          "Biri açık, biri kapalı, biri ısıtılmış bırakılır",
-          "Hiçbirini anlayamazsın"
+          "Bazı kitaplar renklidir",
+          "Tüm kitaplar renklidir",
+          "Bazı dergiler kitaptır",
+          "Hiçbir kitap renkli değildir"
         ],
-        answer: "Biri açık, biri kapalı, biri ısıtılmış bırakılır"
+        answer: "Bazı kitaplar renklidir"
       },
       {
-        question: "Bir çiftlikte 5 köpek var, her biri 4 ayaklı. Kaç ayak eder?",
-        options: ["20", "10", "5", "25"],
-        answer: "20"
+        question: "3. AY:GECE ilişkisi aşağıdakilerden hangisine benzer?",
+        options: ["Güneş:Sabah", "Yıldız:Gökyüzü", "Kitap:Okuma", "Güneş:Gündüz"],
+        answer: "Güneş:Gündüz"
+      },
+      {
+        question: "4. 1, 1, 2, 3, 5, 8, ? Dizideki sıradaki sayı nedir?",
+        options: ["10", "11", "12", "13"],
+        answer: "13"
+      },
+      {
+        question: "5. Hangi şekil diğerlerinden farklıdır?",
+        options: ["Daire", "Üçgen", "Kare", "Küp"],
+        answer: "Küp"
+      },
+      {
+        question: "6. Eğer tüm A’lar B’dir ve bazı B’ler C’dir, aşağıdakilerden hangisi doğrudur?",
+        options: [
+          "Bazı A’lar C’dir",
+          "Tüm B’ler A’dır",
+          "Bazı C’ler A’dır",
+          "Kesin bir şey söylenemez"
+        ],
+        answer: "Kesin bir şey söylenemez"
+      },
+      {
+        question: "7. 9, 27, 81, ?",
+        options: ["162", "243", "324", "729"],
+        answer: "243"
+      },
+      {
+        question: "8. Bir saat sabah 7:00’da 90 derece dönüyor. Saat kaç olur?",
+        options: ["9:00", "10:30", "12:00", "12:30"],
+        answer: "9:00"
+      },
+      {
+        question: "9. Elma:Meyve ilişkisi aşağıdakilerden hangisine benzer?",
+        options: ["Havuç:Sebze", "Süt:İnek", "Köpek:Kedi", "Defter:Kalem"],
+        answer: "Havuç:Sebze"
+      },
+      {
+        question: "10. Hangi sayı diğerlerinden farklıdır? 2, 3, 5, 7, 9, 11",
+        options: ["2", "5", "9", "11"],
+        answer: "9"
+      },
+      {
+        question: "11. 5 çocuk sırayla dizilmiş: Ali, Berk, Cem, Deniz, Emre. Cem ortada. Deniz kaçıncıdır?",
+        options: ["1.", "3.", "4.", "5."],
+        answer: "4."
+      },
+      {
+        question: "12. Eğer bugün Salı ise, 50 gün sonra hangi gündür?",
+        options: ["Perşembe", "Cuma", "Cumartesi", "Pazar"],
+        answer: "Salı"
+      },
+      {
+        question: "13. Hangi sayı 4 ile çarpıldığında 100 eder?",
+        options: ["20", "25", "30", "40"],
+        answer: "25"
+      },
+      {
+        question: "14. Hangisi diğerlerinden farklıdır?",
+        options: ["Kırmızı", "Yeşil", "Mavi", "Renk"],
+        answer: "Renk"
+      },
+      {
+        question: "15. 2 tam ve 2 yarım elma kaç elma eder?",
+        options: ["2", "3", "4", "5"],
+        answer: "3"
       }
     ];
 
@@ -140,17 +205,17 @@
         if (timerEl) timerEl.textContent = `⏳ Kalan Süre: ${timeLeft} saniye`;
         if (timeLeft <= 0) {
           clearInterval(timer);
-          submitAnswer(""); // zaman aşımı = yanlış
+          submitAnswer(""); // zaman aşımı
         }
       }, 1000);
     }
 
     function showResult() {
-      let iq = 80 + score * 10;
+      let iq = 80 + score * 5;
       quizContainer.innerHTML = `
-        <h2>Test Bitti ✅</h2>
+        <h2>Test Tamamlandı ✅</h2>
         <p>Doğru Sayısı: ${score} / ${questions.length}</p>
-        <p><strong>Tahmini IQ: ${iq}</strong></p>
+        <p><strong>Tahmini IQ Puanın: ${iq}</strong></p>
         <button onclick="startQuiz()">🔁 Tekrar Dene</button>
       `;
     }
